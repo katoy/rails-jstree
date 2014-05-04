@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>jsTree Sample</title>
+  <link rel="stylesheet" href="/assets/themes/default/style.min.css" />
+</head>
+
+<body>
+
+  <h2>jstree プラグインの利用例</h2>
+  * ./app 以下 を Tree 表示する (ajax を利用)
+  <table>
+    <thead>
+    </thead>
+    <tbody>
+      <tr>
+	<td width ="400" valign="top" nowrap>
+          <div>
+	    <button id="ajaxTree_open"  class="tree_btn">open_all</button>
+            <button id="ajaxTree_close" class="tree_btn">close_all</button>
+            <br/>
+            <div id="ajaxTree"></div>
+          </div>
+	</td>
+	<td valign="top">
+	  選択された項目: <span id="file_type"></span> <span id="selected"></span>
+	  <div id="file_contents_div">内容：
+	    <div id="file"><pre id="file_contents" class="tree_pre"></pre></div>
+	  </div>
+	</td>
+    </tbody>
+  </table>
+  <hr/>
+
+ * csv の内容
+  <table>
+    <tbody>
+      <tr>
+	<td width ="400" valign="top" nowrap>
+	  階層化表示
+	  <div>
+	    <button id="ajaxTreeCsv_open"  class="tree_btn">open_all</button>
+	    <button id="ajaxTreeCsv_close" class="tree_btn">close_all</button>
+	  </div>
+	  <div id="ajaxTreeCsv"></div>
+	</td>
+	<td  valign="top" nowrap>
+	  CSV のファイル内容
+	  <pre><%= File.open('test/test.csv').read %>
+	  </pre>
+	</td>
+    </tbody>
+  </table>
+  <hr/>
+
+  * HTML List を Tree にする
+  <div id="listTree">
+    <!-- in this example the tree is populated from inline HTML -->
+    <ul>
+      <li id="Root_1">Root node 1
+	<ul>
+          <li id="child_node_1">Child node 1</li>
+          <li id="child_node_2">Child node 2</li>
+	</ul>
+      </li>
+      <li id="Root_2">Root node 2
+	<ul>
+          <li id="child_node_A">Child node A</li>
+          <li id="child_node_B">Child node B</li>
+	</ul>
+      </li>
+    </ul>
+  </div>
+
+  * json データ を Tree にする
+  <div>
+    <div id="jsonTree"></div>
+  </div>
+
+  <hr/>
+  <pre>
+    * TODO:
+      - javascript を別ファイルにする。coffeescript にする。
+      - サーチプラグイン, チェックボックスプラグインを試す。
+
+    * jstree の設定:
+      http://www.jstree.com/docs/json/ の download の link から zip ファイルを落としてくる。
+      落としてきた vakata-jstree-3.0.0-0-gb446e66.zip を展開して、
+　　  themas/ と *.js を assets/javascritp/ に copy する。
+
+  <script>
+  $(function () {
+    $('#file_contents_div').hide()
+    $('#listTree').jstree();
+
+    $('#listTree').on("changed.jstree", function (e, data) {
+      // console.log(data.selected);
+      $('#selected').text(data.selected);
+    });
+
+    $('#jsonTree').jstree({
+      'core' : {
+        'data' : [
+            { 'id': 'node_1', 'text': 'Root node',
+              'children' : [
+                  { 'id': 'node_1_1', 'text' : 'Child 1' },
+                  { 'id': 'node_1_2', 'text' : 'Child 2'}
+                ]
+            },
+            { 'id': 'node_2', 'text': 'Root node with options',
+              'state' : { 'opened' : true, 'selected' : true },
+              'children' : [
+                  { 'id': 'node_2_1', 'text' : 'Child A' },
+                  { 'id': 'node_2_2', 'text' : 'Child B'}
+                ]
+            }
+        ]
+      }
+    });
+    $('#jsonTree').on("changed.jstree", function (e, data) {
+      // console.log(data.selected);
+      $('#selected').text(data.selected);
+    });
+
+    // See http://www.jstree.com/demo/  Filebrowser demo
+    $('#ajaxTree').jstree({
+      'core': {
+        'data': {
+          'url': function (node) {
+            return node.id === '#' ? 'treeData.json' : 'treeData.json';
+          },
+          'data' : function (node) {
+             return { 'id' : node.id };
+          }
+        },
+        'themes' : {
+          'responsive' : false,
+          'variant' : 'small',
+          'stripes' : true
+        }
+      },
+      "types" : {
+        "file" : {
+          "icon" : 'jstree-file'
+        }
+      },
+      "plugins" : [ "types" ]
+    });
+    $('#ajaxTree_open').click(function() {
+      $('#ajaxTree').jstree('open_all');
+    });
+    $('#ajaxTree_close').click(function() {
+      $('#ajaxTree').jstree('close_all');
+    });
+
+    $('#ajaxTree').on("changed.jstree", function (e, data) {
+      // console.log(data.selected);
+      $('#selected').text(data.selected);
+      $('#file_contents_div').hide()
+      $('#file_contents').text('')
+      if (data.node.original.type == 'file') {
+        $('#file_type').text('ファイル');
+        show_filedata(data.node.original.id)
+      } else {
+        $('#file_type').text('ディレクター');
+        clear_filedata()
+      }
+    });
+
+    // path で指定された ./app 以下の ファイルの内容を ajax で得て、画面に表示する。
+    // ./app 以下 以外のファイルが指定された時はエラーにすること。
+    function show_filedata(path) {
+      $.get('/fileData', { path: path },
+        function(data) {
+          $('#file_contents_div').show()
+          $('#file_contents').text(data)
+      });
+    }
+
+    function show_imagedata(path) {
+    }
+
+    function clear_filedata() {
+      $('#file_contents_div').hide()
+      $('#image_contents_div').hide()
+      $('#file_contents').text('')
+    }
+  });
+
+    $('#ajaxTreeCsv').jstree({
+      'core': {
+        'data': {
+          'url': function (node) {
+            return node.id === '#' ? 'treeDataCsv.json' : 'treeDataCsv.json';
+          },
+          'data' : function (node) {
+             return { 'id' : node.id };
+          }
+        }
+      },
+      "types" : {
+        "file" : {
+          "icon" : 'jstree-file'
+        }
+      },
+      "plugins" : [ "types" ]
+    });
+    $('#ajaxTreeCsv').on("changed.jstree", function (e, data) {
+      if (data.node.original.attr && data.node.original.attr.val) {
+        $('#csv_contents').text(data.node.original.attr.val)
+      } else {
+        $('#csv_contents').text('')
+      }
+    });
+    $('#ajaxTreeCsv_open').click(function() {
+      $('#ajaxTreeCsv').jstree('open_all');
+    });
+    $('#ajaxTreeCsv_close').click(function() {
+      $('#ajaxTreeCsv').jstree('close_all');
+    });
+
+
+  </script>
+</body>
+</html>
