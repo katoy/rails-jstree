@@ -5,8 +5,7 @@ class TreeController < ApplicationController
   include TreeHelper
 
   TREE_ROOT_DIR = 'app'
-  CSV_FILE = 'test/test.csv'
-
+  CSV_ROOT_DIR = 'test'
   def index
     respond_to do |format|
       format.html
@@ -21,11 +20,10 @@ class TreeController < ApplicationController
   end
 
   def treeDataCsv
-    csv_hash = read_csv_as_hash(CSV_FILE)
+    file_path = "#{CSV_ROOT_DIR}/#{params[:path]}"
+    csv_hash = read_csv_as_hash(file_path)
     h = csv_to_hash(csv_hash)
     data = csv_hash2json(h)
-
-    file_path = "#{TREE_ROOT_DIR}#{params[:path]}"
 
     respond_to do |format|
       format.json { render json: data }
@@ -44,10 +42,10 @@ class TreeController < ApplicationController
       else
         cont = File.open(file_path).read
       end
-      render text: cont
     rescue => e
       cont = "#{e}"
     end
+    render text: cont
   end
 
   def imageData

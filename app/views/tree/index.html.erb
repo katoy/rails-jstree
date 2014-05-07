@@ -47,8 +47,7 @@
 	</td>
 	<td  valign="top" nowrap>
 	  CSV のファイル内容
-	  <pre><%= File.open('test/test.csv').read %>
-	  </pre>
+	  <pre class="tree_pre"><%= File.open('test/test.csv').read %></pre>
 	</td>
     </tbody>
   </table>
@@ -128,7 +127,7 @@
       'core': {
         'data': {
           'url': function (node) {
-            return node.id === '#' ? 'treeData.json' : 'treeData.json';
+            return 'treeData.json?path';
           },
           'data' : function (node) {
              return { 'id' : node.id };
@@ -195,7 +194,7 @@
             return node.id === '#' ? 'treeDataCsv.json' : 'treeDataCsv.json';
           },
           'data' : function (node) {
-             return { 'id' : node.id };
+             return { 'path' : 'test.csv' };
           }
         }
       },
