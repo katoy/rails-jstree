@@ -10,6 +10,7 @@
 	  <button id="ajaxTree_open"  class="tree_btn">open_all</button>
           <button id="ajaxTree_close" class="tree_btn">close_all</button>
           <br/>
+	   検索:<input type="text" id="ajaxTree-q" style="margin:8px; border-radius:4px;" placeholder="try css"></input>
           <div id="ajaxTree"></div>
         </div>
       </td>
@@ -119,22 +120,26 @@
           'url': function (node) {
             return 'treeData.json?path';
           },
-          'data' : function (node) {
+          'data': function (node) {
              return { 'id' : node.id };
-          }
+          },
+          'check_callback': true,
+          'error': function (jqXHR, textStatus, errorThrown) {
+                      alert("error. " + qXHR.responseText);
+                    }
         },
-        'themes' : {
+        'themes': {
           'responsive' : false,
-          'variant' : 'small',
+          'variant': 'small',
           'stripes' : true
         }
       },
-      "types" : {
-        "file" : {
-          "icon" : 'jstree-file'
+      "types": {
+        "file": {
+          "icon": 'jstree-file'
         }
       },
-      "plugins" : [ "types" ]
+      "plugins": [ "types", "sort", "search" ]
     });
     $('#ajaxTree_open').click(function() {
       $('#ajaxTree').jstree('open_all');
@@ -195,6 +200,18 @@
       },
       "plugins" : [ "types" ]
     });
+
+    var to = false;
+    $('#ajaxTree-q').keyup(function () {
+      if(to) {
+        clearTimeout(to);
+      }
+      to = setTimeout(function () {
+        var v = $('#ajaxTree-q').val();
+        $('#ajaxTree').jstree(true).search(v);
+      }, 250);
+    });
+
     $('#ajaxTreeCsv').on("changed.jstree", function (e, data) {
       if (data.node.original.attr && data.node.original.attr.val) {
         $('#csv_contents').text(data.node.original.attr.val)
