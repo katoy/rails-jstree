@@ -1,94 +1,84 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>jsTree Sample</title>
-  <link rel="stylesheet" href="/assets/themes/default/style.min.css" />
-</head>
+<h2>jstree プラグインの利用例</h2>
+* ./app 以下 を Tree 表示する (ajax を利用)
+<table>
+  <thead>
+  </thead>
+  <tbody>
+    <tr>
+      <td width ="400" valign="top" nowrap>
+        <div>
+	  <button id="ajaxTree_open"  class="tree_btn">open_all</button>
+          <button id="ajaxTree_close" class="tree_btn">close_all</button>
+          <br/>
+          <div id="ajaxTree"></div>
+        </div>
+      </td>
+      <td valign="top">
+	選択された項目: <span id="file_type"></span> <span id="selected"></span>
+	<div id="file_contents_div">内容：
+	  <div id="file"><pre id="file_contents" class="tree_pre"></pre></div>
+	</div>
+      </td>
+  </tbody>
+</table>
+<hr/>
 
-<body>
+* csv の内容
+<table>
+  <tbody>
+    <tr>
+      <td width ="400" valign="top" nowrap>
+	階層化表示
+	<div>
+	  <button id="ajaxTreeCsv_open"  class="tree_btn">open_all</button>
+	  <button id="ajaxTreeCsv_close" class="tree_btn">close_all</button>
+	</div>
+	<div id="ajaxTreeCsv"></div>
+      </td>
+      <td  valign="top" nowrap>
+	CSV のファイル内容
+	<pre class="tree_pre"><%= File.open('test/test.csv').read %></pre>
+      </td>
+  </tbody>
+</table>
+<hr/>
 
-  <h2>jstree プラグインの利用例</h2>
-  * ./app 以下 を Tree 表示する (ajax を利用)
-  <table>
-    <thead>
-    </thead>
-    <tbody>
-      <tr>
-	<td width ="400" valign="top" nowrap>
-          <div>
-	    <button id="ajaxTree_open"  class="tree_btn">open_all</button>
-            <button id="ajaxTree_close" class="tree_btn">close_all</button>
-            <br/>
-            <div id="ajaxTree"></div>
-          </div>
-	</td>
-	<td valign="top">
-	  選択された項目: <span id="file_type"></span> <span id="selected"></span>
-	  <div id="file_contents_div">内容：
-	    <div id="file"><pre id="file_contents" class="tree_pre"></pre></div>
-	  </div>
-	</td>
-    </tbody>
-  </table>
-  <hr/>
+* HTML List を Tree にする
+<div id="listTree">
+  <!-- in this example the tree is populated from inline HTML -->
+  <ul>
+    <li id="Root_1">Root node 1
+      <ul>
+        <li id="child_node_1">Child node 1</li>
+        <li id="child_node_2">Child node 2</li>
+      </ul>
+    </li>
+    <li id="Root_2">Root node 2
+      <ul>
+        <li id="child_node_A">Child node A</li>
+        <li id="child_node_B">Child node B</li>
+      </ul>
+    </li>
+  </ul>
+</div>
 
- * csv の内容
-  <table>
-    <tbody>
-      <tr>
-	<td width ="400" valign="top" nowrap>
-	  階層化表示
-	  <div>
-	    <button id="ajaxTreeCsv_open"  class="tree_btn">open_all</button>
-	    <button id="ajaxTreeCsv_close" class="tree_btn">close_all</button>
-	  </div>
-	  <div id="ajaxTreeCsv"></div>
-	</td>
-	<td  valign="top" nowrap>
-	  CSV のファイル内容
-	  <pre class="tree_pre"><%= File.open('test/test.csv').read %></pre>
-	</td>
-    </tbody>
-  </table>
-  <hr/>
+* json データ を Tree にする
+<div>
+  <div id="jsonTree"></div>
+</div>
 
-  * HTML List を Tree にする
-  <div id="listTree">
-    <!-- in this example the tree is populated from inline HTML -->
-    <ul>
-      <li id="Root_1">Root node 1
-	<ul>
-          <li id="child_node_1">Child node 1</li>
-          <li id="child_node_2">Child node 2</li>
-	</ul>
-      </li>
-      <li id="Root_2">Root node 2
-	<ul>
-          <li id="child_node_A">Child node A</li>
-          <li id="child_node_B">Child node B</li>
-	</ul>
-      </li>
-    </ul>
-  </div>
+<hr/>
+<pre>
+  * TODO:
+  - javascript を別ファイルにする。coffeescript にする。
+  - サーチプラグイン, チェックボックスプラグインを試す。
 
-  * json データ を Tree にする
-  <div>
-    <div id="jsonTree"></div>
-  </div>
-
-  <hr/>
-  <pre>
-    * TODO:
-      - javascript を別ファイルにする。coffeescript にする。
-      - サーチプラグイン, チェックボックスプラグインを試す。
-
-    * jstree の設定:
-      http://www.jstree.com/docs/json/ の download の link から zip ファイルを落としてくる。
-      落としてきた vakata-jstree-3.0.0-0-gb446e66.zip を展開して、
-　　  themas/ と *.js を assets/javascritp/ に copy する。
-
-  <script>
+  * jstree の設定:
+  http://www.jstree.com/docs/json/ の download の link から zip ファイルを落としてくる。
+  落としてきた vakata-jstree-3.0.0-0-gb446e66.zip を展開して、
+  themas/ と *.js を assets/javascritp/ に copy する。
+  
+<script>
   $(function () {
     $('#file_contents_div').hide()
     $('#listTree').jstree();
@@ -218,8 +208,4 @@
     $('#ajaxTreeCsv_close').click(function() {
       $('#ajaxTreeCsv').jstree('close_all');
     });
-
-
-  </script>
-</body>
-</html>
+</script>
