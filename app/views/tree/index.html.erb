@@ -10,7 +10,7 @@
 	  <button id="ajaxTree_open"  class="tree_btn">open_all</button>
           <button id="ajaxTree_close" class="tree_btn">close_all</button>
           <br/>
-	   検索:<input type="text" id="ajaxTree-q" style="margin:8px; border-radius:4px;" placeholder="try css"></input>
+	   <input type="text" id="ajaxTree-q" style="margin:8px; border-radius:4px;" placeholder="try css"></input>(部分一致で逐次選択します)
           <div id="ajaxTree"></div>
         </div>
       </td>
@@ -148,6 +148,11 @@
       $('#ajaxTree').jstree('close_all');
     });
 
+    // クリックで tree の expand / collapse
+    $("#ajaxTree").bind("select_node.jstree", function (e, data) {
+      return data.instance.toggle_node(data.node);
+    });
+
     $('#ajaxTree').on("changed.jstree", function (e, data) {
       // console.log(data.selected);
       $('#selected').text(data.selected);
@@ -201,12 +206,12 @@
       "plugins" : [ "types" ]
     });
 
-    var to = false;
+    var timeout = false;
     $('#ajaxTree-q').keyup(function () {
-      if(to) {
-        clearTimeout(to);
+      if (timeout) {
+        clearTimeout(timeout);
       }
-      to = setTimeout(function () {
+      timeout = setTimeout(function () {
         var v = $('#ajaxTree-q').val();
         $('#ajaxTree').jstree(true).search(v);
       }, 250);
