@@ -7,4 +7,6 @@ Rails.application.routes.draw do
 
   get 'treeData',    to: 'tree#treeData'
   get 'treeDataCsv', to: 'tree#treeDataCsv'
+
+  get 'treeselect', to: 'treeselect#index'
 end

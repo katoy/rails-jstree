@@ -123,7 +123,10 @@ module TreeHelper
         ans << {id: c_path, text: k, type: 'folder', children: dirHash2Json(v, c_path) }
       else
         # file
-        ans << {id: c_path, text: k, type: 'file'}
+        ext = File.extname(k)
+        f_icon = 'file'
+        f_icon += " file-#{ext[1..-1]}" if ext.length > 1
+        ans << {id: c_path, text: k, type: 'file', icon: f_icon}
       end
     end
     ans

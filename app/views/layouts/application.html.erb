@@ -6,7 +6,43 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-  <link rel="stylesheet" href="/assets/themes/default/style.min.css" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+
+  <script type='text/javascript'>
+    var maxDepth = 4;
+    var loadChildren = function(node, level) {
+
+      var hasChildren = (node.level < maxDepth),
+          count = 10,
+          k, id, title;
+      if (level == 0) {
+        count = 1;
+      }
+      for (var i = 0; i < count; i++) {
+        k = 10000;
+        for (var j = 0; j < level; j++) {
+          k = k / 10;
+        }
+        id = parseInt(node.id) + (i * k);
+        title = (level == 0) ? "ALL" : 'Node ' + id;
+        node.children.push({
+          id: id,
+          title: title,
+          has_children: hasChildren,
+          level: node.level + 1,
+          children: []
+        });
+        if (hasChildren && level <= maxDepth) {
+          loadChildren(node.children[i], (level + 1));
+        }
+      }
+      return node;
+    };
+
+  </script>
 
 </head>
 <body>

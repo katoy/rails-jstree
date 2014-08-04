@@ -34,9 +34,10 @@ pre {
   -moz-box-shadow: 0px 1px 4px #666666;
   box-shadow: 0px 1px 4px #666666;
   color: #ffffff;
-  padding: 6px 6px 6px 6px;
+  padding: 4px 4px 4px 4px;
   text-decoration: none;
-  margin: 4px;
+  margin: 2px;
+  font-size: 14px;
 }
 
 .tree_btn:hover {
@@ -46,3 +47,32 @@ pre {
 button:focus {
   outline:0;
 }
+
+#ajaxTree .folder { background:url('./file_sprite.png') right bottom no-repeat; }
+#ajaxTree .file { background:url('./file_sprite.png') 0 0 no-repeat; }
+#ajaxTree .file-pdf { background-position: -32px 0 }
+#ajaxTree .file-as { background-position: -36px 0 }
+#ajaxTree .file-c { background-position: -72px -0px }
+#ajaxTree .file-iso { background-position: -108px -0px }
+#ajaxTree .file-htm, #tree .file-html, #tree .file-xml, #tree .file-xsl { background-position: -126px -0px }
+#ajaxTree .file-cf { background-position: -162px -0px }
+#ajaxTree .file-cpp { background-position: -216px -0px }
+#ajaxTree .file-cs { background-position: -236px -0px }
+#ajaxTree .file-sql { background-position: -272px -0px }
+#ajaxTree .file-xls, #tree .file-xlsx { background-position: -362px -0px }
+#ajaxTree .file-h { background-position: -488px -0px }
+#ajaxTree .file-crt, #tree .file-pem, #tree .file-cer { background-position: -452px -18px }
+#ajaxTree .file-php { background-position: -108px -18px }
+#ajaxTree .file-jpg, #tree .file-jpeg, #tree .file-png, #tree .file-gif, #tree .file-bmp { background-position: -126px -18px }
+#ajaxTree .file-gif, #tree .file-jpeg, #tree .file-png, #tree .file-gif, #tree .file-bmp { background-position: -126px -18px }
+#ajaxTree .file-png, #tree .file-jpeg, #tree .file-png, #tree .file-gif, #tree .file-bmp { background-position: -126px -18px }
+#ajaxTree .file-ppt, #tree .file-pptx { background-position: -144px -18px }
+#ajaxTree .file-rb { background-position: -180px -18px }
+#ajaxTree .file-text, #tree .file-txt, #tree .file-md, #tree .file-log, #tree .file-htaccess { background-position: -254px -18px }
+#ajaxTree .file-doc, #tree .file-docx { background-position: -362px -18px }
+#ajaxTree .file-zip, #tree .file-gz, #tree .file-tar, #tree .file-rar { background-position: -416px -18px }
+#ajaxTree .file-js { background-position: -434px -18px }
+#ajaxTree .file-css { background-position: -144px -0px }
+#ajaxTree .file-scss { background-position: -144px -0px }
+#ajaxTree .file-less { background-position: -144px -0px }
+#ajaxTree .file-fla { background-position: -398px -0px }

@@ -1,3 +1,8 @@
+<div>
+  <a href="tree">jstree</a>
+  <a href="treeselect">treeselect</a>
+</div>
+
 <h2>jstree プラグインの利用例</h2>
 * ./app 以下 を Tree 表示する (ajax を利用)
 <table>
@@ -78,7 +83,7 @@
   http://www.jstree.com/docs/json/ の download の link から zip ファイルを落としてくる。
   落としてきた vakata-jstree-3.0.0-0-gb446e66.zip を展開して、
   themas/ と *.js を assets/javascritp/ に copy する。
-  
+
 <script>
   $(function () {
     $('#file_contents_div').hide()
@@ -136,10 +141,10 @@
       },
       "types": {
         "file": {
-          "icon": 'jstree-file'
+          "icon": 'file'
         }
       },
-      "plugins": [ "types", "sort", "search" ]
+      "plugins": [ "types", "sort", "search", "wholerow" ]
     });
     $('#ajaxTree_open').click(function() {
       $('#ajaxTree').jstree('open_all');

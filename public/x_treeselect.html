@@ -1,0 +1,22 @@
+
+
+<p>
+  See <a href="http://travistidwell.com/jquery.treeselect.js/">http://travistidwell.com/jquery.treeselect.js</a>
+</p>
+
+<div class="chosentree"></div>
+
+<script type='text/javascript'>
+    jQuery(function() {
+      $('div.chosentree').chosentree({
+        width: 500,
+        deepLoad: true,
+        showtree: true,
+        load: function(node, callback) {
+          setTimeout(function() {
+            callback(loadChildren(node, 0));
+          }, 1000);
+        }
+      });
+    });
+</script>
