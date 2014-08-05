@@ -7,16 +7,63 @@
 <div class="chosentree"></div>
 
 <script type='text/javascript'>
-    jQuery(function() {
-      $('div.chosentree').chosentree({
-        width: 500,
-        deepLoad: true,
-        showtree: true,
-        load: function(node, callback) {
-          setTimeout(function() {
-            callback(loadChildren(node, 0));
-          }, 1000);
-        }
+
+  var maxDepth = 4;
+  var loadChildren_0 = function(node, level) {
+    var count = 10,
+        k, id, title,
+        hasChildren = node.level < maxDepth ;
+    if (level == 0) {
+      count = 1;
+    }
+    for (var i = 0; i < count; i++) {
+      k = 10000;
+      for (var j = 0; j < level; j++) {
+        k = k / 10;
+      }
+      id = parseInt(node.id) + (i * k);
+      if (!hasChildren) {
+        id = id + 1;
+      }
+      title = (level == 0) ? "ALL" : 'Node ' + id;
+      node.children.push({
+        id: id,
+        title: title,
+        has_children: hasChildren,
+        level: node.level + 1,
+        children: []
       });
+      if (hasChildren && level <= maxDepth) {
+        loadChildren_0(node.children[i], (level + 1));
+      }
+    }
+    return node;
+  };
+
+  var loadChildren_1 = function(node, level) {
+    var node;
+    node.children = [];
+    node.children[0] = {
+        id: 1,
+        title: "title",
+        has_children: false,
+        level: 0,
+        children: []
+    };
+    return node;
+  };
+
+
+  jQuery(function() {
+    $('div.chosentree').chosentree({
+      width: 500,
+      deepLoad: true,
+      showtree: true,
+      load: function(node, callback) {
+        setTimeout(function() {
+          callback(loadChildren_0(node, 0));
+        }, 1000);
+      }
     });
+  });
 </script>

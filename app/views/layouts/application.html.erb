@@ -11,39 +11,6 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
 
-  <script type='text/javascript'>
-    var maxDepth = 4;
-    var loadChildren = function(node, level) {
-
-      var hasChildren = (node.level < maxDepth),
-          count = 10,
-          k, id, title;
-      if (level == 0) {
-        count = 1;
-      }
-      for (var i = 0; i < count; i++) {
-        k = 10000;
-        for (var j = 0; j < level; j++) {
-          k = k / 10;
-        }
-        id = parseInt(node.id) + (i * k);
-        title = (level == 0) ? "ALL" : 'Node ' + id;
-        node.children.push({
-          id: id,
-          title: title,
-          has_children: hasChildren,
-          level: node.level + 1,
-          children: []
-        });
-        if (hasChildren && level <= maxDepth) {
-          loadChildren(node.children[i], (level + 1));
-        }
-      }
-      return node;
-    };
-
-  </script>
-
 </head>
 <body>
 
