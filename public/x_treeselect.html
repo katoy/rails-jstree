@@ -11,8 +11,8 @@
   var maxDepth = 4;
   var loadChildren_0 = function(node, level) {
     var count = 10,
-        k, id, title,
-        hasChildren = node.level < maxDepth ;
+        k, id, title, node,
+        hasChildren = node.level < maxDepth;
     if (level == 0) {
       count = 1;
     }
@@ -41,18 +41,38 @@
   };
 
   var loadChildren_1 = function(node, level) {
-    var node;
-    node.children = [];
     node.children[0] = {
         id: 1,
         title: "title",
         has_children: false,
-        level: 0,
+        level: 1,
         children: []
     };
     return node;
   };
 
+  var loadChildren_2 = function(node, level) {
+    var item = {
+        id: 1,
+        title: "root",
+        has_children: true,
+        level: 1,
+        children: []
+    };
+
+    for (var i = 0; i < 2; i++) {
+      item.children[i] = {
+          id: 10 + i,
+          title: "title_" + i,
+          has_children: false,
+          level: 2,
+          children: []
+      };
+    }
+
+    node.children = [item];
+    return node;
+  };
 
   jQuery(function() {
     $('div.chosentree').chosentree({
@@ -61,7 +81,7 @@
       showtree: true,
       load: function(node, callback) {
         setTimeout(function() {
-          callback(loadChildren_0(node, 0));
+          callback(loadChildren_2(node, 0));
         }, 1000);
       }
     });
