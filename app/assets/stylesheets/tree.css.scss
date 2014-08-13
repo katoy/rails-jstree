@@ -48,8 +48,8 @@ button:focus {
   outline:0;
 }
 
-#ajaxTree .folder { background:url('./file_sprite.png') right bottom no-repeat; }
-#ajaxTree .file { background:url('./file_sprite.png') 0 0 no-repeat; }
+#ajaxTree .folder { background:image-url('file_sprite.png') right bottom no-repeat; }
+#ajaxTree .file { background:image-url('file_sprite.png') 0 0 no-repeat; }
 #ajaxTree .file-pdf { background-position: -32px 0 }
 #ajaxTree .file-as { background-position: -36px 0 }
 #ajaxTree .file-c { background-position: -72px -0px }

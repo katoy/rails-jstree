@@ -10,10 +10,18 @@ $ rspec
 ```
 
 ```
-$ ./setup.sh
+$ source ./setup.sh
+$ rake assets:clobber
 $ rake assets:precompile
 $ rails s -e production
 ```
+
+次のエラーメッセージ  
+　　ERROR RuntimeError: Missing `secret_key_base` for 'production' environment, set this value in `config/secrets.yml`  
+が出た場合、  
+　　$ source ./setup.sh  
+を実行すると解消する。
+
 
 # スクリーンショット
 
