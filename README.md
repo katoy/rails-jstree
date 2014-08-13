@@ -9,6 +9,12 @@ $ rails s &
 $ rspec
 ```
 
+```
+$ ./setup.sh
+$ rake assets:precompile
+$ rails s -e production
+```
+
 # スクリーンショット
 
 ![スクリーンショット](./screenshots/RailsTreejs.png)
