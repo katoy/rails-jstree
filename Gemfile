@@ -43,6 +43,8 @@ gem 'spring',        group: :development
 
 gem 'shared-mime-info'
 
+gem 'guard-bundler'
+
 # See http://qiita.com/yusabana/items/8ce54577d959bb085b37
 group :test, :development do
   gem 'pry-rails'
